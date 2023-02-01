@@ -135,7 +135,7 @@ jobs:
     steps:
       - checkout
       - run : 
-          name: install aws-cli
+          name: yum install -y tar gzip
           command: |
               yum install -y tar gzip 
       - run:
