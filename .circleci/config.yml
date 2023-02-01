@@ -195,9 +195,9 @@ jobs:
       - install_awscli
       # Add ssh keys with fingerprint
       - add_ssh_keys:
-       fingerprints: ["e5:c2:35:98:b6:93:92:98:e4:d4:3e:b0:18:74:32:21"] 
+          fingerprints: ["e5:c2:35:98:b6:93:92:98:e4:d4:3e:b0:18:74:32:21"] 
       - attach_workspace:
-        at: ~/
+          at: ~/
       - run:
           name: Install dependencies
           command: |
