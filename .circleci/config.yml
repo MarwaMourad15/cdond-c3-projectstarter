@@ -377,9 +377,9 @@ jobs:
             cd ..
             # mkdir .circleci/ansible/roles/deploy/files
             cp backend/artifact.tar.gz .circleci/ansible/roles/deploy/files/
-            cd .circleci/ansible/roles/deploy/files/
-            ls
-            cd ..
+            # cd .circleci/ansible/roles/deploy/files/
+            # ls
+            # cd ..
             cd .circleci/ansible
             echo "Contents  of the inventory.txt file is -------"
             cat inventory.txt
@@ -393,8 +393,8 @@ jobs:
 
             
 
-    # - revert-migrations
-    #  - destroy-environment
+      - revert-migrations
+      - destroy-environment
 
   smoke-test:
     docker:
