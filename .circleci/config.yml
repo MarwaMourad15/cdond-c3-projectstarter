@@ -22,11 +22,17 @@ commands:
           name: Destroy environments
           when: on_fail
           command: |
+            sudo apt -y update 
+            sudo apt-get install -f
+            sudo apt-get update  --fix-missing
+            sudo apt-get update 
+            #sudo apt-get install awscli
+            #sudo  install  awscli
             curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-            apt-get install -y zip unzip
-            unzip awscliv2.zip 
-            ./aws/install 
-            ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update
+            sudo apt-get install -y zip unzip
+            sudo unzip awscliv2.zip 
+            sudo ./aws/install 
+            sudo ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update
             
             aws cloudformation delete-stack --stack-name udapeople-backend-<< parameters.Workflow_ID >>
             aws s3 rm s3://udapeople-<< parameters.Workflow_ID >> --recursive
@@ -42,11 +48,22 @@ commands:
               # yum install -f
               # yum update  --fix-missing
               # yum update 
+              # curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+              # yum install -y zip unzip
+              # unzip awscliv2.zip 
+              # ./aws/install 
+              # ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update
+              sudo apt -y update 
+              sudo apt-get install -f
+              sudo apt-get update  --fix-missing
+              sudo apt-get update 
+              #sudo apt-get install awscli
+              #sudo  install  awscli
               curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-              apt-get install -y zip unzip
-              unzip awscliv2.zip 
-              ./aws/install 
-              ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update
+              sudo apt-get install -y zip unzip
+              sudo unzip awscliv2.zip 
+              sudo ./aws/install 
+              sudo ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update
 
   install_ansible:
     description: install ansible 
