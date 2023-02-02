@@ -24,8 +24,6 @@
       yum: 
         name: python3
         update_cache: yes
-    
-    -setup:
 
   # Get the environment variables from CircleCI and add to the EC2 instance
   # environment:
