@@ -391,8 +391,6 @@ jobs:
       #       # export TYPEORM_ENTITIES=./modules/domain/**/*.entity{.ts,.js}
       #       # export TYPEORM_MIGRATIONS=./migrations/*.ts
 
-            
-
       - revert-migrations
       - destroy-environment
 
