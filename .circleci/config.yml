@@ -398,7 +398,7 @@ jobs:
 
   smoke-test:
     docker:
-      - image: cimg/base:stable
+      - image: circleci/node:13.8.0 
     steps:
       - checkout
       - install_awscli
@@ -406,6 +406,7 @@ jobs:
           name: Install dependencies
           command: |
             sudo apt install -y curl
+            sudo apt install net-tools
       - run:
           name: Get backend url and Backend smoke test
           command: |
@@ -413,14 +414,13 @@ jobs:
             --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
             --output text)
-
-            export API_URL="http://${BACKEND_IP}:3030"
-            echo "${API_URL}"
-            if curl "${API_URL}/api/status" | grep "ok"
+            export API_URL=http://${BACKEND_IP}:3030
+            echo "${BACKEND_IP}"
+            if curl -s $API_URL/api/status | grep "ok"
             then
-                return 0
+                exit 0
             else
-                return 1
+                exit 1
             fi
       
       - run:
@@ -435,8 +435,8 @@ jobs:
               else
                 return 1
               fi 
-      - revert-migrations 
       - destroy-environment
+      - revert-migrations 
 
   # cloudfront-update:
   #   docker:
