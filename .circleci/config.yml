@@ -340,8 +340,8 @@ jobs:
       - image: cimg/base:stable
     steps:
       - checkout
-      - install_nodejs
       - install_awscli
+      - install_nodejs
       - install_ansible
       - add_ssh_keys:
           fingerprints: ["e5:c2:35:98:b6:93:92:98:e4:d4:3e:b0:18:74:32:21"] 
@@ -360,12 +360,16 @@ jobs:
             cd backend
             npm i
             npm run build
-            tar -czf artifact.tar.gz dist/* package*
+            tar -czvf artifact.tar.gz dist/* package*
             cd ..
             cp backend/artifact.tar.gz .circleci/ansible/roles/deploy/files
       - run:
           name: Deploy backend
           command: |
+            export TYPEORM_MIGRATIONS_DIR=./migrations
+            export TYPEORM_ENTITIES=./modules/domain/**/*.entity{.ts,.js}
+            export TYPEORM_MIGRATIONS=./migrations/*.ts
+
             cd .circleci/ansible
             echo "Contents  of the inventory.txt file is -------"
             cat inventory.txt
