@@ -392,8 +392,8 @@ jobs:
 
             
 
-      - revert-migrations
-      - destroy-environment
+    # - revert-migrations
+    #  - destroy-environment
 
   smoke-test:
     docker:
