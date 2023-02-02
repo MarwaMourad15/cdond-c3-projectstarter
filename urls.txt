@@ -1,0 +1,2 @@
+URL01 (URL to your public GitHub repository): https://github.com/MarwaMourad15/cdond-c3-projectstarter
+URL02 (public URL for your S3 Bucket): http://udapeople-71ed02e.s3-website-us-east-1.amazonaws.com
