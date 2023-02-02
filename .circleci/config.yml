@@ -369,21 +369,33 @@ jobs:
       - run:
           name: Package Backend and Deploy
           command: |
-            # Zip the directory
-            # tar -C backend -czvf artifact.tar.gz .
             cd backend
+            npm i
             npm run build
-            tar -czf artifact.tar.gz dist/* package*
             cd ..
-            # mkdir .circleci/ansible/roles/deploy/files
-            cp backend/artifact.tar.gz .circleci/ansible/roles/deploy/files/
-            # cd .circleci/ansible/roles/deploy/files/
-            # ls
-            # cd ..
+            # Zip the directory
+            tar -C backend -czvf artifact.tar.gz .
+            cp artifact.tar.gz .circleci/ansible/roles/deploy/files/
             cd .circleci/ansible
             echo "Contents  of the inventory.txt file is -------"
             cat inventory.txt
-            ansible-playbook -i inventory.txt deploy-backend.yml 
+            ansible-playbook -i inventory.txt deploy-backend.yml
+
+            # # Zip the directory
+            # # tar -C backend -czvf artifact.tar.gz .
+            # cd backend
+            # npm run build
+            # tar -czf artifact.tar.gz dist/* package*
+            # cd ..
+            # # mkdir .circleci/ansible/roles/deploy/files
+            # cp backend/artifact.tar.gz .circleci/ansible/roles/deploy/files/
+            # # cd .circleci/ansible/roles/deploy/files/
+            # # ls
+            # # cd ..
+            # cd .circleci/ansible
+            # echo "Contents  of the inventory.txt file is -------"
+            # cat inventory.txt
+            # ansible-playbook -i inventory.txt deploy-backend.yml 
       # - run:
       #     name: Deploy backend
       #     command: |
