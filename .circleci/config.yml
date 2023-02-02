@@ -42,6 +42,18 @@ commands:
               ./aws/install 
               ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update
 
+  install_ansible:
+    description: install ansible 
+    steps:
+      - run: 
+          name: install ansible 
+          command: |
+              sudo apt update 
+              #sudo apt install software-properties-common -y 
+              sudo add-apt-repository --yes --update ppa:ansible/ansible
+              #sudo apt -y update && apt install -y python3
+              sudo apt install -y python3
+              sudo apt install -y ansible 
 
 jobs:
   build-frontend:
@@ -187,20 +199,18 @@ jobs:
 
   configure-infrastructure:
     docker:
+      - image: cimg/base:stable
       # Docker image here that supports Ansible
-      - image: ansible/centos7-ansible 
+      #- image: ansible/centos7-ansible 
     steps:
       - checkout
+      - install_ansible
       #- install_awscli
       # Add ssh keys with fingerprint
       - add_ssh_keys:
           fingerprints: ["e5:c2:35:98:b6:93:92:98:e4:d4:3e:b0:18:74:32:21"] 
       - attach_workspace:
           at: ~/
-      - run:
-          name: Install dependencies
-          command: |
-            yum install -y tar gzip
       - run:
           name: Configure server
           command: |
