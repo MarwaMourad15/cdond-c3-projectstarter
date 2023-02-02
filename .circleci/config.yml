@@ -342,11 +342,13 @@ jobs:
                     
   deploy-backend:
     docker:
-      - image: cimg/node:13.8.0
+      # The authenticity of host can't be established
+      #- image: cimg/node:13.8.0
+      - image: cimg/python:3.10
     steps:
       - checkout
       - install_awscli
-      #- install_nodejs
+      - install_nodejs
       - install_ansible
       - add_ssh_keys:
           fingerprints: ["e5:c2:35:98:b6:93:92:98:e4:d4:3e:b0:18:74:32:21"] 
@@ -363,7 +365,7 @@ jobs:
           name: Package Backend
           command: |
             # Zip the directory
-            #tar -C backend -czvf artifact.tar.gz .
+            # tar -C backend -czvf artifact.tar.gz .
             cd backend
             npm run build
             tar -czf artifact.tar.gz dist/* package*
