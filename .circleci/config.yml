@@ -466,7 +466,7 @@ jobs:
             aws cloudformation deploy \
             --template-file .circleci/files/cloudfront.yml \
             --stack-name InitialStack \
-            --parameter-overrides WorkflowID="udapeople-${CIRCLE_WORKFLOW_ID:0:7}" \
+            --parameter-overrides WorkflowID="${CIRCLE_WORKFLOW_ID:0:7}" \
             --tags project=udapeople
       - destroy-environment
       - revert-migrations
@@ -489,7 +489,8 @@ jobs:
             export OldWorkflowID=$(curl --insecure https://kvdb.io/Kc57GatLmLMy6wx43mtGBu/old_workflow_id)
             echo Old Workflow ID: $OldWorkflowID
 
-            if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
+            #if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
+            if [[ "${CIRCLE_WORKFLOW_ID:0:7}" != "${OldWorkflowID}" ]]
             then
               echo "deleted" 
               aws s3 rm "s3://${OldWorkflowID}" --recursive
