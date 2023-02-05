@@ -90,15 +90,15 @@ commands:
           when: on_fail
           # Add when this will run
           command: |
-            # Curl command here to see if there was a successful migration associated with the workflow id, store result in SUCCESS variable
             SUCCESS=$(curl --insecure  https://kvdb.io/Kc57GatLmLMy6wx43mtGBu/migration_<< parameters.Workflow_ID >>)
-            if(( $SUCCESS==1 )); 
+            # Logic for reverting the database state
+            if (( ${SUCCESS} == 1 ));
             then
               cd ~/project/backend
-              npm -y install
-              npm audit fix
-              npm -y install
+              npm install
               npm run migration:revert
+            else
+              echo "can not revert DB"
             fi
 
   install_nodejs:
