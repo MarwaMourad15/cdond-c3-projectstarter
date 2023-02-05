@@ -95,7 +95,7 @@ commands:
             if(( $SUCCESS==1 )); 
             then
               cd ~/project/backend
-              npm install
+              npm -y install
               npm audit fix
               npm -y install
               npm run migration:revert
@@ -306,7 +306,8 @@ jobs:
           command: |
             if grep -q "has been executed successfully." ~/project/backend/migrations_dump.txt
             then
-              curl -d '1' https://kvdb.io/Kc57GatLmLMy6wx43mtGBu/migration_${CIRCLE_WORKFLOW_ID:0:7}
+              curl https://kvdb.io/Kc57GatLmLMy6wx43mtGBu/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
+              #curl -d '1' https://kvdb.io/Kc57GatLmLMy6wx43mtGBu/migration_${CIRCLE_WORKFLOW_ID:0:7}
             fi      
       - revert-migrations
       - destroy-environment
@@ -439,7 +440,7 @@ jobs:
               echo ${URL} 
               if curl -s ${URL} | grep "Welcome"
               then
-                exit 0 
+                exit 1 
               else
                 exit 1
               fi 
@@ -491,12 +492,12 @@ jobs:
             #if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
             if [[ "${CIRCLE_WORKFLOW_ID:0:7}" != "${OldWorkflowID}" ]]
             then
-              echo "deleted" 
-              aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
-              aws cloudformation delete-stack --stack-name "udapeople-backend-${OldWorkflowID}"
-              aws cloudformation delete-stack --stack-name "udapeople-frontend-${OldWorkflowID}"
+              echo "-------------- deleted Confirmed ----------------" 
+              aws s3 rm s3://udapeople-${OldWorkflowID} --recursive
+              aws cloudformation delete-stack --stack-name udapeople-backend-${OldWorkflowID}
+              aws cloudformation delete-stack --stack-name udapeople-frontend-${OldWorkflowID}
             else
-              echo "cannot clean up"
+              echo "-------------- cannot clean up -------------- "
             fi
             
 
